@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FraudGuard – AI-Based Fraud Detection Prototype</title>
+<style>
+  :root{--bg:#0f172a;--card:#1e293b;--ink:#e2e8f0;--mute:#94a3b8;--line:#334155;--accent:#38bdf8;
+        --ok:#22c55e;--warn:#f59e0b;--bad:#ef4444;--rej:#a78bfa}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  header{padding:20px 32px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+  h1{margin:0;font-size:22px} h1 span{color:var(--accent)}
+  .sub{color:var(--mute);font-size:13px}
+  main{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;padding:24px 32px;max-width:1200px;margin:auto}
+  @media(max-width:900px){main{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+  h2{margin:0 0 14px;font-size:16px;color:var(--accent)}
+  label{display:block;font-size:12px;color:var(--mute);margin-bottom:4px}
+  input[type=number],input[type=text]{width:100%;padding:9px 10px;border-radius:8px;border:1px solid var(--line);background:#0b1220;color:var(--ink)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .checks{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0}
+  .checks label{display:flex;gap:6px;align-items:center;color:var(--ink);font-size:13px;margin:0}
+  button{cursor:pointer;border:0;border-radius:8px;padding:10px 16px;font-weight:600}
+  .primary{background:var(--accent);color:#04202e} .ghost{background:#0b1220;color:var(--ink);border:1px solid var(--line);margin:2px 6px 2px 0;font-weight:500;font-size:12px}
+  #result{min-height:150px}
+  .badge{display:inline-block;padding:6px 16px;border-radius:999px;font-weight:700;font-size:18px;letter-spacing:.5px}
+  .APPROVE{background:rgba(34,197,94,.15);color:var(--ok)} .REVIEW{background:rgba(245,158,11,.15);color:var(--warn)}
+  .BLOCK{background:rgba(239,68,68,.15);color:var(--bad)} .REJECTED{background:rgba(167,139,250,.15);color:var(--rej)}
+  .meter{height:10px;background:#0b1220;border-radius:6px;overflow:hidden;margin:8px 0 4px}
+  .meter div{height:100%;background:linear-gradient(90deg,var(--ok),var(--warn),var(--bad))}
+  ul{margin:10px 0 0 18px;padding:0;font-size:13px} li{margin:3px 0}
+  table{width:100%;border-collapse:collapse;font-size:12px} th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}
+  th{color:var(--mute);font-weight:500}
+  .full{grid-column:1/-1}
+  .err{color:var(--bad);font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Fraud<span>Guard</span> · Hybrid Rules + ML</h1>
+  <div class="sub">SEP Micro Project · Path &amp; Condition Testing of an AI-Based Fraud Detection Prototype · SDG 16</div></div>
+  <div class="sub">Model (synthetic data): precision {{ metrics.precision }} · recall {{ metrics.recall }} · accuracy {{ metrics.accuracy }}</div>
+</header>
+<main>
+  <section class="card">
+    <h2>Transaction</h2>
+    <div>
+      <button class="ghost" onclick="preset('normal')">Normal purchase</button>
+      <button class="ghost" onclick="preset('foreign')">High amount, foreign</button>
+      <button class="ghost" onclick="preset('structuring')">Structuring pattern</button>
+      <button class="ghost" onclick="preset('blacklist')">Blacklisted merchant</button>
+      <button class="ghost" onclick="preset('invalid')">Invalid input</button>
+    </div>
+    <div class="grid" style="margin-top:14px">
+      <div><label>Amount (₹)</label><input id="amount" type="number" value="1500"></div>
+      <div><label>Hour of day (0-23)</label><input id="hour" type="number" value="14"></div>
+      <div><label>Transactions in last hour</label><input id="txn_last_hour" type="number" value="1"></div>
+      <div><label>Account age (days)</label><input id="account_age_days" type="number" value="400"></div>
+      <div class="full"><label>Recent amounts (comma separated)</label><input id="recent_amounts" type="text" placeholder="e.g. 47000, 48500, 49000"></div>
+    </div>
+    <div class="checks">
+      <label><input type="checkbox" id="is_foreign"> Foreign location</label>
+      <label><input type="checkbox" id="is_new_device"> New device</label>
+      <label><input type="checkbox" id="is_blacklisted_merchant"> Blacklisted merchant</label>
+    </div>
+    <button class="primary" onclick="assess()">Assess transaction</button>
+  </section>
+
+  <section class="card">
+    <h2>Decision</h2>
+    <div id="result"><span class="sub">Submit a transaction to see the verdict.</span></div>
+  </section>
+
+  <section class="card full">
+    <h2>Session log</h2>
+    <table><thead><tr><th>#</th><th>Amount</th><th>Hour</th><th>Velocity</th><th>Verdict</th><th>Risk pts</th><th>ML score</th></tr></thead>
+    <tbody id="log"></tbody></table>
+  </section>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+let n = 0;
+const presets = {
+  normal:{amount:1500,hour:14,txn_last_hour:1,account_age_days:400,recent_amounts:'',is_foreign:0,is_new_device:0,is_blacklisted_merchant:0},
+  foreign:{amount:85000,hour:2,txn_last_hour:2,account_age_days:200,recent_amounts:'',is_foreign:1,is_new_device:1,is_blacklisted_merchant:0},
+  structuring:{amount:20000,hour:11,txn_last_hour:3,account_age_days:90,recent_amounts:'46000, 47500, 49000',is_foreign:0,is_new_device:0,is_blacklisted_merchant:0},
+  blacklist:{amount:900,hour:16,txn_last_hour:1,account_age_days:800,recent_amounts:'',is_foreign:0,is_new_device:0,is_blacklisted_merchant:1},
+  invalid:{amount:-50,hour:27,txn_last_hour:1,account_age_days:100,recent_amounts:'',is_foreign:0,is_new_device:0,is_blacklisted_merchant:0}
+};
+function preset(k){const p=presets[k];
+  for(const f of ['amount','hour','txn_last_hour','account_age_days','recent_amounts']) $(f).value=p[f];
+  for(const f of ['is_foreign','is_new_device','is_blacklisted_merchant']) $(f).checked=!!p[f];}
+async function assess(){
+  const recent = $('recent_amounts').value.split(',').map(s=>s.trim()).filter(Boolean).map(Number);
+  const body = {amount:$('amount').value,hour:$('hour').value,txn_last_hour:$('txn_last_hour').value,
+    account_age_days:$('account_age_days').value,recent_amounts:recent,
+    is_foreign:$('is_foreign').checked,is_new_device:$('is_new_device').checked,
+    is_blacklisted_merchant:$('is_blacklisted_merchant').checked};
+  const r = await fetch('/api/assess',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const d = await r.json();
+  if(!r.ok){$('result').innerHTML='<div class="err">'+d.error+'</div>';return;}
+  const ml = d.ml_score===null?'n/a':d.ml_score.toFixed(3);
+  const pct = d.ml_score===null?0:Math.round(d.ml_score*100);
+  $('result').innerHTML = '<span class="badge '+d.verdict+'">'+d.verdict+'</span>'
+    +'<div class="sub" style="margin-top:12px">ML fraud probability: '+ml+' · Rule risk points: '+d.risk_points+'</div>'
+    +'<div class="meter"><div style="width:'+pct+'%"></div></div>'
+    +'<ul>'+d.reasons.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
+  n++;
+  $('log').insertAdjacentHTML('afterbegin','<tr><td>'+n+'</td><td>₹'+body.amount+'</td><td>'+body.hour+'</td><td>'+body.txn_last_hour+'</td><td><span class="badge '+d.verdict+'" style="font-size:11px;padding:2px 10px">'+d.verdict+'</span></td><td>'+d.risk_points+'</td><td>'+ml+'</td></tr>');
+}
+</script>
+</body>
+</html>

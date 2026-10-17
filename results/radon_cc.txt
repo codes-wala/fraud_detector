@@ -1,0 +1,24 @@
+fraud_detector/model.py
+    F 22:0 features - A (5)
+    C 53:0 FraudModel - A (2)
+    F 34:0 generate_synthetic - A (1)
+    M 54:4 FraudModel.__init__ - A (1)
+    M 60:4 FraudModel._train - A (1)
+    M 74:4 FraudModel.score - A (1)
+fraud_detector/engine.py
+    F 82:0 rule_risk_score - B (10)
+    F 47:0 validate_transaction - B (7)
+    F 71:0 hard_block_reason - A (5)
+    F 104:0 final_decision - A (5)
+    F 113:0 assess - A (4)
+    F 61:0 count_structuring - A (3)
+    F 127:0 evaluate - A (2)
+    C 28:0 Transaction - A (1)
+    C 40:0 Decision - A (1)
+fraud_detector/api.py
+    F 17:0 parse_transaction - B (7)
+    F 11:0 _to_bool - A (2)
+    F 40:0 create_app - A (2)
+
+18 blocks (classes, functions, methods) analyzed.
+Average complexity: A (3.3333333333333335)

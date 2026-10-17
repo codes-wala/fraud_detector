@@ -1,0 +1,6 @@
+flask>=3.0
+scikit-learn>=1.4
+numpy>=1.26
+pytest>=8.0
+coverage>=7.0
+radon>=6.0

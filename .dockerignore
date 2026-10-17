@@ -1,0 +1,12 @@
+.git
+.gitignore
+**/__pycache__
+*.pyc
+.pytest_cache
+.coverage
+results/
+shots/
+*.zip
+Dockerfile
+docker-compose.yml
+.dockerignore

@@ -1,0 +1,50 @@
+============================= test session starts ==============================
+collecting ... collected 45 items
+
+tests/test_condition_testing.py::test_mcdc_D1_high_amount_with_foreign_or_new_device[True-True-False-True-baseline (T,T,F)] PASSED
+tests/test_condition_testing.py::test_mcdc_D1_high_amount_with_foreign_or_new_device[True-False-False-False-B flips outcome vs (T,T,F)] PASSED
+tests/test_condition_testing.py::test_mcdc_D1_high_amount_with_foreign_or_new_device[True-False-True-True-C flips outcome vs (T,F,F)] PASSED
+tests/test_condition_testing.py::test_mcdc_D1_high_amount_with_foreign_or_new_device[False-True-False-False-A flips outcome vs (T,T,F)] PASSED
+tests/test_condition_testing.py::test_mcdc_D2_hard_block_very_high_amount[True-True-False-True] PASSED
+tests/test_condition_testing.py::test_mcdc_D2_hard_block_very_high_amount[True-False-False-False] PASSED
+tests/test_condition_testing.py::test_mcdc_D2_hard_block_very_high_amount[True-False-True-True] PASSED
+tests/test_condition_testing.py::test_mcdc_D2_hard_block_very_high_amount[False-True-False-False] PASSED
+tests/test_condition_testing.py::test_mcdc_D3_night_and_medium_amount[True-True-True] PASSED
+tests/test_condition_testing.py::test_mcdc_D3_night_and_medium_amount[False-True-False] PASSED
+tests/test_condition_testing.py::test_mcdc_D3_night_and_medium_amount[True-False-False] PASSED
+tests/test_condition_testing.py::test_mcdc_D4_new_account_and_medium_amount[True-True-True] PASSED
+tests/test_condition_testing.py::test_mcdc_D4_new_account_and_medium_amount[False-True-False] PASSED
+tests/test_condition_testing.py::test_mcdc_D4_new_account_and_medium_amount[True-False-False] PASSED
+tests/test_condition_testing.py::test_mcdc_D5_amount_range[100-False] PASSED
+tests/test_condition_testing.py::test_mcdc_D5_amount_range[0-True] PASSED
+tests/test_condition_testing.py::test_mcdc_D5_amount_range[1000001.0-True] PASSED
+tests/test_condition_testing.py::test_mcdc_D6_hour_range[12-False] PASSED
+tests/test_condition_testing.py::test_mcdc_D6_hour_range[-1-True] PASSED
+tests/test_condition_testing.py::test_mcdc_D6_hour_range[24-True] PASSED
+tests/test_condition_testing.py::test_mcdc_D7_D8_final_decision[0.0-0-APPROVE] PASSED
+tests/test_condition_testing.py::test_mcdc_D7_D8_final_decision[0.75-0-BLOCK] PASSED
+tests/test_condition_testing.py::test_mcdc_D7_D8_final_decision[0.0-4-BLOCK] PASSED
+tests/test_condition_testing.py::test_mcdc_D7_D8_final_decision[0.4-0-REVIEW] PASSED
+tests/test_condition_testing.py::test_mcdc_D7_D8_final_decision[0.0-2-REVIEW] PASSED
+tests/test_condition_testing.py::test_boundary_values_rule_risk[kw0-0] PASSED
+tests/test_condition_testing.py::test_boundary_values_rule_risk[kw1-2] PASSED
+tests/test_condition_testing.py::test_boundary_values_rule_risk[kw2-1] PASSED
+tests/test_condition_testing.py::test_boundary_values_rule_risk[kw3-1] PASSED
+tests/test_condition_testing.py::test_boundary_values_rule_risk[kw4-0] PASSED
+tests/test_condition_testing.py::test_boundary_values_rule_risk[kw5-0] PASSED
+tests/test_condition_testing.py::test_boundary_values_rule_risk[kw6-2] PASSED
+tests/test_condition_testing.py::test_boundary_values_rule_risk[kw7-0] PASSED
+tests/test_condition_testing.py::test_boundary_values_rule_risk[kw8-2] PASSED
+tests/test_condition_testing.py::test_boundary_values_rule_risk[kw9-0] PASSED
+tests/test_condition_testing.py::test_boundary_values_rule_risk[kw10-0] PASSED
+tests/test_condition_testing.py::test_boundary_ml_score_limits_accepted PASSED
+tests/test_boundary_validation.py::test_valid_edge_values_are_accepted[{'amount': 0.01}] PASSED
+tests/test_boundary_validation.py::test_valid_edge_values_are_accepted[{'amount': 1000000.0}] PASSED
+tests/test_boundary_validation.py::test_valid_edge_values_are_accepted[{'hour': 0}] PASSED
+tests/test_boundary_validation.py::test_valid_edge_values_are_accepted[{'hour': 23}] PASSED
+tests/test_boundary_validation.py::test_valid_edge_values_are_accepted[{'txn_last_hour': 0}] PASSED
+tests/test_boundary_validation.py::test_valid_edge_values_are_accepted[{'account_age_days': 0}] PASSED
+tests/test_boundary_validation.py::test_assess_reason_added_exactly_at_review_threshold PASSED
+tests/test_boundary_validation.py::test_rejected_decision_carries_zero_risk_points PASSED
+
+============================== 45 passed in 0.04s ==============================

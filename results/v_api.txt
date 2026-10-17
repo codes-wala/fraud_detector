@@ -1,0 +1,20 @@
+============================= test session starts ==============================
+collecting ... collected 15 items
+
+tests/test_api_and_model.py::test_index_page_loads PASSED               
+tests/test_api_and_model.py::test_health PASSED                         
+tests/test_api_and_model.py::test_assess_normal_is_approved PASSED      
+tests/test_api_and_model.py::test_assess_suspicious_is_blocked PASSED   
+tests/test_api_and_model.py::test_assess_blacklisted_merchant PASSED    
+tests/test_api_and_model.py::test_assess_invalid_values_rejected_with_200 PASSED
+tests/test_api_and_model.py::test_assess_bad_payload_returns_400[payload0] PASSED
+tests/test_api_and_model.py::test_assess_bad_payload_returns_400[payload1] PASSED
+tests/test_api_and_model.py::test_assess_bad_payload_returns_400[payload2] PASSED
+tests/test_api_and_model.py::test_assess_bad_payload_returns_400[payload3] PASSED
+tests/test_api_and_model.py::test_assess_non_json_body_returns_400 PASSED
+tests/test_api_and_model.py::test_parse_transaction_bool_coercion PASSED
+tests/test_api_and_model.py::test_features_vector_matches_names PASSED  
+tests/test_api_and_model.py::test_model_scores_are_probabilities_and_ordered PASSED
+tests/test_api_and_model.py::test_model_metrics_reasonable_and_reproducible PASSED
+
+============================== 15 passed in 1.32s ==============================

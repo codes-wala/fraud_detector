@@ -1,0 +1,17 @@
+services:
+  fraudguard:
+    build:
+      context: .
+      target: runtime
+    image: fraudguard:latest
+    container_name: fraudguard
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+
+  tests:
+    build:
+      context: .
+      target: test
+    image: fraudguard:test
+    profiles: ["test"]

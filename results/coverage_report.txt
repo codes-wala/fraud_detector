@@ -1,0 +1,8 @@
+Name                         Stmts   Miss Branch BrPart  Cover
+--------------------------------------------------------------
+fraud_detector/__init__.py       0      0      0      0   100%
+fraud_detector/api.py           38      0      6      0   100%
+fraud_detector/engine.py        97      0     38      0   100%
+fraud_detector/model.py         40      0      0      0   100%
+--------------------------------------------------------------
+TOTAL                          175      0     44      0   100%

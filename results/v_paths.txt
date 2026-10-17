@@ -1,0 +1,46 @@
+============================= test session starts ==============================
+collecting ... collected 41 items
+
+tests/test_path_testing.py::test_validate_paths[V1 valid input] PASSED  
+tests/test_path_testing.py::test_validate_paths[V2 amount <= 0] PASSED  
+tests/test_path_testing.py::test_validate_paths[V3 amount > max only] PASSED
+tests/test_path_testing.py::test_validate_paths[V4 hour < 0] PASSED     
+tests/test_path_testing.py::test_validate_paths[V5 hour > 23 only] PASSED
+tests/test_path_testing.py::test_validate_paths[V6 negative velocity] PASSED
+tests/test_path_testing.py::test_validate_paths[V7 negative account age] PASSED
+tests/test_path_testing.py::test_validate_multiple_errors_accumulate PASSED
+tests/test_path_testing.py::test_count_structuring_paths[S1 loop skipped (0 iterations)] PASSED
+tests/test_path_testing.py::test_count_structuring_paths[S2 one iteration, condition true] PASSED
+tests/test_path_testing.py::test_count_structuring_paths[S3 one iteration, condition false] PASSED
+tests/test_path_testing.py::test_count_structuring_paths[S4 two iterations, mixed] PASSED
+tests/test_path_testing.py::test_count_structuring_paths[S5 many iterations, all in band] PASSED
+tests/test_path_testing.py::test_hard_block_paths[H1 blacklisted merchant] PASSED
+tests/test_path_testing.py::test_hard_block_paths[H2 very high + new device] PASSED
+tests/test_path_testing.py::test_hard_block_paths[H3 very high + new account (old device)] PASSED
+tests/test_path_testing.py::test_hard_block_paths[H4 very high but established customer] PASSED
+tests/test_path_testing.py::test_hard_block_paths[H5 normal amount] PASSED
+tests/test_path_testing.py::test_rule_risk_paths[R1 baseline - nothing fires] PASSED
+tests/test_path_testing.py::test_rule_risk_paths[R2 high amount + foreign] PASSED
+tests/test_path_testing.py::test_rule_risk_paths[R3 high amount + new device only] PASSED
+tests/test_path_testing.py::test_rule_risk_paths[R4 high amount, neither foreign nor new] PASSED
+tests/test_path_testing.py::test_rule_risk_paths[R5 night + medium amount] PASSED
+tests/test_path_testing.py::test_rule_risk_paths[R6 night but low amount] PASSED
+tests/test_path_testing.py::test_rule_risk_paths[R7 velocity above max] PASSED
+tests/test_path_testing.py::test_rule_risk_paths[R8 new account + medium amount] PASSED
+tests/test_path_testing.py::test_rule_risk_paths[R9 new account but low amount] PASSED
+tests/test_path_testing.py::test_rule_risk_paths[R10 structuring (3 amounts below limit)] PASSED
+tests/test_path_testing.py::test_rule_risk_all_rules_fire_together PASSED
+tests/test_path_testing.py::test_final_decision_paths[F1 ML >= block threshold] PASSED
+tests/test_path_testing.py::test_final_decision_paths[F2 risk >= block risk] PASSED
+tests/test_path_testing.py::test_final_decision_paths[F3 ML >= review threshold] PASSED
+tests/test_path_testing.py::test_final_decision_paths[F4 risk >= review risk] PASSED
+tests/test_path_testing.py::test_final_decision_paths[F5 everything low] PASSED
+tests/test_path_testing.py::test_assess_A1_invalid_ml_score[-0.01] PASSED
+tests/test_path_testing.py::test_assess_A1_invalid_ml_score[1.01] PASSED
+tests/test_path_testing.py::test_assess_A2_hard_block_short_circuits_rules PASSED
+tests/test_path_testing.py::test_assess_A3_clean_transaction_approved_without_ml_reason PASSED
+tests/test_path_testing.py::test_assess_A4_ml_reason_appended_when_score_high PASSED
+tests/test_path_testing.py::test_evaluate_E1_invalid_input_rejected_and_scorer_not_called PASSED
+tests/test_path_testing.py::test_evaluate_E2_valid_input_uses_scorer PASSED
+
+============================== 41 passed in 0.04s ==============================
